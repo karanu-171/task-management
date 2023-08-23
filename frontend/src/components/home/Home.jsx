@@ -22,22 +22,20 @@ const Home = () => {
     fetchTask();
   }, []);
 
-  const _id = id
-
-  const handleDelete = (id) => {
-    const confirm = window.confirm("Would you like to delete?")
-    async function deleteTask() {
+  const handleDelete = async (id) => {
+    const confirmDelete = window.confirm("Would you like to delete?");
+    if (confirmDelete) {
       try {
-        const response = await axios.delete(`http://localhost:4000/task/${id}`)
-        console.log(response.data.message)
+        await axios.delete(`http://localhost:4000/task/${id}`);
+        setData((prevData) => prevData.filter((task) => task._id !== id));
+        console.log("Task deleted successfully.");
       } catch (error) {
-        console.log(error)
+        console.log(error);
       }
     }
-    if(confirm) {
-      deleteTask();
-    }
-  }
+  };
+
+  
   
     return(
         <div className="d-flex flex-column align-items-center bg-light vh-100">
@@ -63,7 +61,7 @@ const Home = () => {
                     <td>
                       <Link to={`/read/${d.id}`} className="btn btn-sm btn-info me-2">Read</Link>
                       <Link to={`/update/${d.id}`} className="btn btn-sm btn-primary me-2">Edit</Link>
-                      <button onClick={e => handleDelete(d.id)} className="btn btn-sm btn-danger">Delete</button>
+                      <button onClick={() => handleDelete(d._id)} className="btn btn-sm btn-danger">Delete</button>
                     </td>
                   </tr>
                   ))}
