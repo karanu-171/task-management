@@ -13,7 +13,7 @@ const createTask = async (req,res) =>{
     })
     const result = await task.save()
 
-    return  res.status(200).json({task: result })
+    return  res.status(201).json({task: result })
   } catch (error) {
       res.status(500).json({ message: error.message });
       console.log(error);
@@ -56,7 +56,7 @@ const updateTask = async (req, res) => {
     res.status(200).json({ message: 'Task updated successfully', task: updatedTask });
   } catch (error) {
       res.status(500).json({ message: error.message });
-      console.log(error)
+      console.log(error);
   }
 }
 
